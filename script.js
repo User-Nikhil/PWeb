@@ -102,7 +102,7 @@ function waitAndResponce(inputText) {
             sendTextMessage(contactString);
             break;
         case "projects":
-            sendTextMessage("You want to check projects that i am involved in? sorry, i got nothing to put into it, you can still view my resume just for fun sake.<br><br><div class='social'><a target='_blank' href='https://drive.google.com/file/d/1wq__uh3Pm-Fe2w46fabvwXyO1t1KpY1b/view?usp=sharing'> <div class='socialItem'><img class='socialItemI' src='images/github.svg' alt=''></div> </a></div>");
+            sendTextMessage("You want to check projects that i am involved in? sorry, i got nothing to put into it, you can still view my resume just for fun sake.<br> BTW, working on something BIG.<br><div class='social'><a target='_blank' href='https://drive.google.com/file/d/1wq__uh3Pm-Fe2w46fabvwXyO1t1KpY1b/view?usp=sharing'> <div class='socialItem'><img class='socialItemI' src='images/github.svg' alt=''></div> </a></div>");
             break;
         case "new":
             sendTextMessage(addressString);
