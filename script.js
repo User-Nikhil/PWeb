@@ -2,6 +2,26 @@ var audio = new Audio('assets/sentmessage.mp3');
 var contactString = "<div class='social'> <a target='_blank' href='tel:+977980000000'> <div class='socialItem' id='call'><img class='socialItemI' src='images/phone.svg'/><label class='number'>+9779812395049</label></div> </a> <a href='mailto:userneekz@gmail.com'> <div class='socialItem'><img class='socialItemI' src='images/gmail.svg' alt=''></div> </a> <a target='_blank' href='https://github.com/User-Nikhil'> <div class='socialItem'><img class='socialItemI' src='images/github.svg' alt=''></div> </a> <a target='_blank' href='https://wa.me/9812395049'> <div class='socialItem'><img class='socialItemI' src='images/whatsapp.svg' alt=''></div> </a> <a target='_blank' href='https://t.me/anygalsdtf'> <div class='socialItem'><img class='socialItemI' src='images/telegram.svg' alt=''></div> </a> <a target='_blank' href='https://instagram.com/metaidgaf'> <div class='socialItem'><img class='socialItemI' src='images/instagram.svg' alt=''> </div> </a> <a href='https://www.linkedin.com/in/nikhil-sha-6ba783250//' target='_blank' rel='noopener noreferrer'> <div class='socialItem'><img class='socialItemI' src='images/linkedin.svg' alt=''></div> </a> </div>";
 var resumeString = "<img src='images/resumeThumbnail.png' class='resumeThumbnail'><div class='downloadSpace'><div class='pdfname'><img src='images/pdf.png'><label>Nikhil's CV.pdf</label></div><a href='assets/Nikhil&#39;s CV.pdf' download='Nikhil's CV.pdf'><img class='download' src='images/downloadIcon.svg'></a></div>";
 var addressString = "<div class='mapview'><iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d898.6040322927004!2d87.40382563722672!3d26.76267866991033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ef670016ce0261%3A0xfb8e134396c80e88!2sNikhil%20Store!5e0!3m2!1sen!2snp!4v1693990047087!5m2!1sen!2snp' class='map'></iframe></div><label class='add'><address><br>Morang, Nepal 56610</address>";
+
+
+
+var repliesfForHowAreYou = ["I'm fine.", "I'm good. And yourself?", "Not bad. How are you?", "I'm doing well, and you?", "Good, how about you?", "I'm great!", "Everything is fine when you are around.", "The best I can be. I hope you are at your best too.", "I'm still learning and eagerly waiting to grasp new things."];
+var repliesForHello = ["Hello there!", "Hey!", "Hola!", "Nice to meet you!", "I'm here!", "Hey! How's it going?", "What's up?", "Hey! What a pleasant surprise!"];
+var repliesForBye = ["Catch you on the flip side!", "Bye-bye, butterfly.", "See you soon!", "Catch you later!", "Bye for now", "See you on the internet!"];
+var repliesfForLove = ["You are day-dreaming again!", "I love You........Tube! LOL!", "Are you sure you aren't sick or something?", "I love you too!", "You are not my type!", "❤️"]
+var repliesForCommandUnknown = ["Hey I couldn't catch you....<br>Send 'help' to know more about usage.", "I didn't get it.", "Please can you repeat it?", "I'm still learning...please use approriate keywords in your phrase.", "I'm still working on it.<br>"];
+var repliesForVoiceAssistants = ["Yes! I know her.", "Of-cource! Who don't know her?", "I'm teching lessions from her!", "She is my BFF!", "My childhood friend!"];
+
+
+
+function getRandom(arrayOfReplies) {
+    var sizeOfArray = arrayOfReplies.length;
+    return arrayOfReplies[Math.floor(Math.random() * sizeOfArray)];
+}
+
+
+
+
 function startFunction() {
     setLastSeen();
     waitAndResponce("intro");
@@ -108,9 +128,7 @@ function waitAndResponce(inputText) {
             sendTextMessage(addressString);
             break;
         default:
-            setTimeout(() => {
-                sendTextMessage("Hey I couldn't catch you...😢<br>Send 'help' to know more about usage.");
-            }, 2000);
+            ifElseThinkAndExecute(inputText.toLowerCase().trim());
             break;
     }
 
@@ -118,11 +136,33 @@ function waitAndResponce(inputText) {
 
 }
 
+function ifElseThinkAndExecute(textString) {
+    if (textString.includes("hii") || textString.includes("hi") || textString.includes("hello") || textString.includes("hola") || textString.includes("hey")) {
+        // reply for hi message
+        sendTextMessage(getRandom(repliesForHello));
+    } else if (textString.includes("i need break") || textString.includes("leave me") || textString.includes("bye") || textString.includes("see you soon") || textString.includes("bye bye") || textString.includes("goodbye")) {
+        // reply for bye message
+        sendTextMessage(getRandom(repliesForBye));
+    } else if (textString.includes("i love you") || textString.includes("love you") || textString.includes("you are hot") || textString.includes("i like you")) {
+        // reply for i love you
+        sendTextMessage(getRandom(repliesfForLove));
+    } else if (textString.includes("how are you") || (textString.includes("hows going") || textString.includes("how its going" || textString.includes("how it's going") || textString.includes("what are you doing")))) {
+        // reply for 'how are you' request
+        sendTextMessage(getRandom(repliesfForHowAreYou));
+    } else if (textString.includes("you know") && (textString.includes("bixby") || textString.includes("siri" || textString.includes("alexa") || textString.includes("cortana")))) {
+        // reply for 'you know other chattingBots' request
+        sendTextMessage(getRandom(repliesForVoiceAssistants));
+    } else {
+        setTimeout(() => {
+            sendTextMessage(getRandom(repliesForCommandUnknown));
+        }, 2000);
+    }
+}
+
 function clearChat() {
     document.getElementById("listUL").innerHTML = "";
     waitAndResponce('intro');
 }
-
 
 
 function sendTextMessage(textToSend) {
